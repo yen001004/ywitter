@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { dbService } from "firebaseConfig";
+import { dbService, storageService } from "firebaseConfig";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
 
 const Yweet = ({ yweetObj, isOwner }) => {
     const [editing, setEditing] = useState(false);
     const [newYweet, setNewYweet] = useState(yweetObj.text);
-    const YweetTextRef = doc(dbService, "yweets", `${yweetObj.id}`);
+    const yweetTextRef = doc(dbService, "yweets", `${yweetObj.id}`);
+    const yweetUrlRef = ref(storageService, yweetObj.attachmentUrl);
     const onDeleteClick = async () => {
         const ok = window.confirm("Are you sure you want to delete this yweet?");
         if (ok) {
-            await deleteDoc(YweetTextRef);
+            await deleteDoc(yweetTextRef);
+            await deleteObject(yweetUrlRef);
         }
     };
     const toggleEditing = () => setEditing((prev) => !prev);
     const onSubmit = async (event) => {
         event.preventDefault();
-        await updateDoc(YweetTextRef, {
+        await updateDoc(yweetTextRef, {
             text: newYweet
         });
         setEditing(false);
@@ -40,6 +43,7 @@ const Yweet = ({ yweetObj, isOwner }) => {
                  ) : (
                      <>
                         <h4>{yweetObj.text}</h4>
+                        {yweetObj.attachmentUrl && <img src={yweetObj.attachmentUrl} width="50px" height="50px" />}
                         {isOwner && (
                             <>
                                 <button onClick={onDeleteClick}>Delete Yweet</button>
