@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "firebaseConfig";
-import { addDoc, collection, getDocs, query } from "firebase/firestore";
+import { addDoc, collection, query, onSnapshot } from "firebase/firestore";
 
 
-const Home = () => {
+const Home = ({ userObj }) => {
     const [yweet, setYweet] = useState("");
     const [yweets, setYweets] = useState([]);
-    const getYweets = async () => {
-        const q = query(collection(dbService, "yweets"));
-        const querySnapshot = await getDocs(q);
-        const yweetObj = querySnapshot.docs.map((doc) => (
-            {
-                ...doc.data(),
-                id: doc.id,
-            }
-            
-        ));
-        setYweets(yweetObj);
-    };
+    
     useEffect(() => {
-        getYweets();
+        const q = query(collection(dbService, "yweets"));
+        onSnapshot(q, snapshot => {
+            const yweetArr = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setYweets(yweetArr);
+        });
     }, []);
     
     const onSubmit = async (event) => {
         event.preventDefault();
             await addDoc(collection(dbService, "yweets"), {
-                yweet,
+                text: yweet,
                 createdAt: Date.now(),
+                creatorId: userObj.uid,
             });
             // console.log("Document written with ID: ", docRef.id);
         
@@ -38,7 +35,6 @@ const Home = () => {
         } = event;
         setYweet(value);
     };
-    console.log(yweets);
     return (
         <div>
             <form onSubmit={onSubmit}>
@@ -48,7 +44,7 @@ const Home = () => {
             <div>
                 {yweets.map((yweet) => (
                     <div key={yweet.id}>
-                        <h4>{yweet.yweet}</h4>
+                        <h4>{yweet.text}</h4>
                     </div>
                 ))}
             </div>
