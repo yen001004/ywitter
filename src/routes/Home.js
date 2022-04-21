@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { dbService } from "firebaseConfig";
+import { dbService, storageService } from "firebaseConfig";
 import { addDoc, collection, query, onSnapshot } from "firebase/firestore";
 import Yweet from "components/Yweet";
-
+import { ref, uploadString } from "firebase/storage";
+import { v4 } from "uuid";
 
 const Home = ({ userObj }) => {
     const [yweet, setYweet] = useState("");
@@ -21,12 +22,15 @@ const Home = ({ userObj }) => {
     
     const onSubmit = async (event) => {
         event.preventDefault();
-            await addDoc(collection(dbService, "yweets"), {
-                text: yweet,
-                createdAt: Date.now(),
-                creatorId: userObj.uid,
-            });
-        setYweet("");
+        const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+        const response = await uploadString(fileRef, attachment, "data_url");
+        console.log(response);
+        // await addDoc(collection(dbService, "yweets"), {
+        //     text: yweet,
+        //     createdAt: Date.now(),
+        //     creatorId: userObj.uid,
+        // });
+        // setYweet("");
     };
     const onChange = (event) => {
         const {
