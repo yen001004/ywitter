@@ -8,7 +8,7 @@ import { v4 } from "uuid";
 const Home = ({ userObj }) => {
     const [yweet, setYweet] = useState("");
     const [yweets, setYweets] = useState([]);
-    const [attachment, setAttachment] = useState();
+    const [attachment, setAttachment] = useState("");
     useEffect(() => {
         const q = query(collection(dbService, "yweets"));
         onSnapshot(q, snapshot => {
