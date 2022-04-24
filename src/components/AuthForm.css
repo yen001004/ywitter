@@ -1,7 +1,7 @@
 .card {
     display: flex;
     justify-content: center;
-    height: 450px;
+    height: 70%;
     margin: 0 20%;
     margin-top: 100px;
 }
@@ -26,4 +26,11 @@
 
 .togglebtn:hover {
     color: #4287f5;
+}
+
+
+.autherror {
+    color: tomato;
+    text-align: center;
+    font-weight: 500;
 }

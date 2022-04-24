@@ -2,7 +2,7 @@ import { authService } from "firebaseConfig";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Card, Form, Input } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import "components/AuthForm.css";
 
 const AuthForm = () => {
@@ -32,7 +32,25 @@ const AuthForm = () => {
             }
             console.log(data);
         } catch (error) {
-            setError(error.message);
+            let errormsg;
+            if (error.code == 'auth/weak-password') {
+                errormsg = "Password should be at least 6 characters";
+            }
+            if (error.code == 'auth/email-already-in-use') {
+                errormsg = "Email is already in use";
+            }
+            if (error.code == 'auth/invalid-email') {
+                errormsg = "Invalid Email";
+            }
+            if (error.code == 'auth/wrong-password') {
+                errormsg = "Wrong password";
+            }
+            if (error.code == 'auth/user-not-found') {
+                errormsg = "User not found";
+            } else {
+                setError(error.message);
+            }
+            setError(errormsg);
         }
     };
 
@@ -55,7 +73,8 @@ const AuthForm = () => {
                     <Button size="large" type="primary" block htmlType="submit" >{newAccount ? "Create Account" : "Log In"}</Button>
                     <br />
                     <br />
-                    {error}
+                    {error && <span className="autherror"><ExclamationCircleOutlined /> {error}</span>}
+                    
                     </div>
             
             </Form>
