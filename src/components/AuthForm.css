@@ -1,0 +1,29 @@
+.card {
+    display: flex;
+    justify-content: center;
+    height: 450px;
+    margin: 0 20%;
+    margin-top: 100px;
+}
+
+
+
+.formcard {
+    align-items: center;
+    width: 450px;
+    text-align: center;
+    
+    
+}
+
+.input {
+    width: 360px;
+}
+
+.togglebtn {
+    cursor: pointer;
+}
+
+.togglebtn:hover {
+    color: #4287f5;
+}

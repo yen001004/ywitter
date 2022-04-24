@@ -1,6 +1,10 @@
 import { authService } from "firebaseConfig";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { Button, Card, Form, Input } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import "components/AuthForm.css";
+
 const AuthForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -18,7 +22,7 @@ const AuthForm = () => {
         }
     };
     const onSubmit = async (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         try {
             let data;
             if (newAccount) {
@@ -35,15 +39,31 @@ const AuthForm = () => {
     const toggleAccount = () => setNewAccount((prev) => !prev);
     return (
         <>
-            <form onSubmit={onSubmit}>
-                <input name="email" type="email" placeholder="Email" required value={email} onChange={onChange} />
-                <input name="password" type="password" placeholder="Password" required value={password}onChange={onChange} />
-                <input type="submit" value={newAccount ? "Create Account" : "Log In"} />
-                {error}
-            </form>
-            <span onClick={toggleAccount}>
+        
+            
+            <Form onFinish={onSubmit}>
+            
+            <div>
+                    <div>
+                    <Input size="large" prefix={<UserOutlined />} name="email" type="email" placeholder="Email" required value={email} onChange={onChange} className="input" />
+                    </div>
+                    <br />
+                    <div>
+                    <Input size="large" prefix={<LockOutlined />} name="password" type="password" placeholder="Password" required value={password}onChange={onChange} className="input" />
+                    </div>
+                    <br />
+                    <Button size="large" type="primary" block htmlType="submit" >{newAccount ? "Create Account" : "Log In"}</Button>
+                    <br />
+                    <br />
+                    {error}
+                    </div>
+            
+            </Form>
+            <span onClick={toggleAccount} className="togglebtn">
                 {newAccount ? "Sign In" : "Create Account"}
             </span>
+            
+            
         </>
     )
 };

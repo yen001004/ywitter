@@ -1,8 +1,12 @@
-import { async } from "@firebase/util";
 import { authService, firebaseInstance } from "firebaseConfig";
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import AuthForm from "components/AuthForm";
+import { Button, Card } from "antd";
+import { GoogleOutlined, GithubOutlined } from "@ant-design/icons";
+import "routes/Auth.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSplotch } from "@fortawesome/free-solid-svg-icons";
 
 const Auth = () => {
     
@@ -20,10 +24,17 @@ const Auth = () => {
     }
     return (
         <div>
+            <div className="card">
+        <Card className="formcard">
+        <FontAwesomeIcon icon={faSplotch} size="5x" className="icon"/>
             <AuthForm />
+            
             <div>
-                <button onClick={onSocialClick} name="google">Continue with Google</button>
-                <button onClick={onSocialClick} name="github">Continue with Github</button>
+            <br />
+                <Button onClick={onSocialClick} name="google" className="socialbtn"><GoogleOutlined/>Continue with Google</Button>
+                <Button onClick={onSocialClick} name="github" className="socialbtn"><GithubOutlined/>Continue with Github</Button>
+            </div>
+            </Card>
             </div>
         </div>
     );
