@@ -7,6 +7,7 @@ import Yweet from "components/Yweet";
 
 export default ({ refreshUser, userObj }) => {
     const navigate = useNavigate();
+    const [nameUpdating, setNameUpdating] = useState(false);
     const [myYweets, setMyYweets] = useState([]);
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
     const onLogOutClick = () => {
@@ -28,6 +29,7 @@ export default ({ refreshUser, userObj }) => {
         getMyYweets();
     }, [])
 
+    const toggleNameUpdating = () => setNameUpdating((prev) => !prev);
     const onChange = (event) => {
         const {
             target: { value },
@@ -39,14 +41,27 @@ export default ({ refreshUser, userObj }) => {
         if (userObj.displayName !== newDisplayName) {
             await updateProfile(authService.currentUser, { displayName: newDisplayName });
             refreshUser();
-        }
+        };
+        setNameUpdating(false);
     };
     return (
         <>
-            <form onSubmit={onSubmit}>
-                <input onChange={onChange} type="text" placeholder="Display name" value={newDisplayName} />
-                <input type="submit" value="Update Profile" />
-            </form>
+        <div>
+            {
+                nameUpdating ? (
+                    <>
+                        <form onSubmit={onSubmit}>
+                            <input onChange={onChange} type="text" placeholder="Display name" value={newDisplayName} />
+                            <input type="submit" value="Update Profile" />
+                        </form>
+                        <button onClick={toggleNameUpdating}>Cancel</button>
+                    </>
+                ) : (
+                    <button onClick={toggleNameUpdating}>Update Profile</button>
+                )
+            }
+        </div>
+            
             <button onClick={onLogOutClick}>Log Out</button>
             <div>
                 {myYweets.map((yweet) => (

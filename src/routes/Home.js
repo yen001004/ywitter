@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { dbService, storageService } from "firebaseConfig";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import Yweet from "components/Yweet";
-
+import "routes/Home.css"
 import YweetFactory from "components/YweetFactory";
 
 const Home = ({ userObj }) => {
@@ -19,7 +19,8 @@ const Home = ({ userObj }) => {
     }, []);
     
     return (
-        <div>
+        <>
+        <div className="homeMain">
             <YweetFactory userObj={userObj} />
             <div>
                 {yweets.map((yweet) => (
@@ -27,6 +28,7 @@ const Home = ({ userObj }) => {
                 ))}
             </div>
         </div>
+        </>
     );
 };
 export default Home;

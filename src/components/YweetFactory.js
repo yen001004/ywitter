@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { v4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import "components/YweetFactory.css"
+import { Image, Input } from "antd";
+import { CloudTwoTone } from "@ant-design/icons";
 
 const YweetFactory = ({ userObj }) => {
     const [yweet, setYweet] = useState("");
@@ -48,17 +51,19 @@ const YweetFactory = ({ userObj }) => {
     };
     const onClearAttachment = () => {setAttachment("")};
     return (
+        <div className="yweetFactory">
         <form onSubmit={onSubmit}>
-                <input value={yweet} onChange={onChange} type="text" placeholder="What's on your mind?" maxLength={120} />
-                <input type="file" accept="image/*" onChange={onFileChange}/>
-                <input type="submit" value="Yweet" />
+                <Input size="large" value={yweet} onChange={onChange} type="text" placeholder="What's on your mind?" maxLength={120} prefix={<CloudTwoTone />} />
+                <Input type="file" accept="image/*" onChange={onFileChange} />
+                <Input type="submit" value="Yweet" />
                 {attachment && (
                     <div>
-                        <img src={attachment} width="50px" height="50px" />
+                        <Image src={attachment} width="150px" />
                         <button onClick={onClearAttachment}>Clear</button>
                     </div>
                 )}
             </form>
+        </div>
     )
 };
 

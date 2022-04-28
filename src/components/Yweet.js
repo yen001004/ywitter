@@ -3,6 +3,9 @@ import { dbService, storageService } from "firebaseConfig";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { Link } from "react-router-dom";
+import "components/Yweet.css"
+import { Button, Card, Image } from "antd";
+import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 
 const Yweet = ({ yweetObj, isOwner }) => {
     const [editing, setEditing] = useState(false);
@@ -36,7 +39,8 @@ const Yweet = ({ yweetObj, isOwner }) => {
         setNewYweet(value);
     };
     return (
-        <div>
+        <div className="yweets">
+            <Card>
             {
                 editing ? (
                     <>
@@ -49,18 +53,19 @@ const Yweet = ({ yweetObj, isOwner }) => {
                  ) : (
                      <>
                         <h3><Link to={`/profile/`+yweetObj.creatorId}>{yweetObj.creatorName}</Link></h3>
-                        <h5>{new Date(yweetObj.createdAt).toLocaleString()}</h5>
+                        <h5 className="yweetTime">{new Date(yweetObj.createdAt).toLocaleString()}</h5>
                         <h4>{yweetObj.text}</h4>
-                        {yweetObj.attachmentUrl && <img src={yweetObj.attachmentUrl} width="50px" height="50px" />}
+                        {yweetObj.attachmentUrl && <Image src={yweetObj.attachmentUrl} width="150px" />}
                         {isOwner && (
                             <>
-                                <button onClick={onDeleteClick}>Delete Yweet</button>
-                                <button onClick={toggleEditing}>Edit Yweet</button>
+                                <Button onClick={onDeleteClick}><DeleteTwoTone /></Button>
+                                <Button onClick={toggleEditing}><EditTwoTone /></Button>
                             </>
                         )}
                      </>
                  )
             }
+            </Card>
         </div>
     );
 };
