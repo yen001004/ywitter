@@ -9,12 +9,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSplotch } from "@fortawesome/free-solid-svg-icons";
 
 const Auth = () => {
-    
     const onSocialClick = async (event) => {
         const {
             target: { name },
         } = event;
-        let provider;
+        let provider = "";
         if (name === "google") {
             provider = new GoogleAuthProvider();
         } else if (name === "github") {

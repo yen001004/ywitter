@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AppRouter from "components/Router";
 import { authService } from "firebaseConfig";
 import { updateProfile } from "firebase/auth";
-import "antd/dist/antd.css"
+import "antd/dist/antd.min.css"
 
 function App() {
   const [init, setInit] = useState(false);
@@ -14,7 +14,7 @@ function App() {
         setIsLoggedIn(true);
         setUserObj({
           displayName: user.displayName,
-          uid: user.displayName,
+          uid: user.uid,
           updateProfile: (args) => updateProfile(user, { displayName: user.displayName }),
         });
         if (user.displayName === null) {

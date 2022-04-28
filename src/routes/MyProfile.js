@@ -14,7 +14,7 @@ export default ({ refreshUser, userObj }) => {
         navigate("/");
     };
     const getMyYweets = async() => {
-        const q = query(collection(dbService, "yweets"), where("creatorId", "==", userObj.uid), orderBy("createdAt"));
+        const q = query(collection(dbService, "yweets"), where("creatorId", "==", userObj.uid), orderBy("createdAt", "desc"));
         onSnapshot(q, snapshot => {
             const myYweetArr = snapshot.docs.map(doc => ({
                 id: doc.id,

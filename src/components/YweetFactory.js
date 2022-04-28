@@ -9,7 +9,7 @@ const YweetFactory = ({ userObj }) => {
     const [attachment, setAttachment] = useState("");
     const onSubmit = async (event) => {
         event.preventDefault();
-        let attachmentUrl;
+        let attachmentUrl = "";
         if (attachment !== "") {
             const attachmentRef = ref(storageService, `${userObj.uid}/${v4()}`);
             const response = await uploadString(attachmentRef, attachment, "data_url");
@@ -19,6 +19,7 @@ const YweetFactory = ({ userObj }) => {
             text: yweet,
             createdAt: Date.now(),
             creatorId: userObj.uid,
+            creatorName: userObj.displayName,
             attachmentUrl
         }
         await addDoc(collection(dbService, "yweets"), yweetObj);
@@ -45,7 +46,7 @@ const YweetFactory = ({ userObj }) => {
         };
         reader.readAsDataURL(theFile);
     };
-    const onClearAttachment = () => setAttachment(null);
+    const onClearAttachment = () => {setAttachment("")};
     return (
         <form onSubmit={onSubmit}>
                 <input value={yweet} onChange={onChange} type="text" placeholder="What's on your mind?" maxLength={120} />

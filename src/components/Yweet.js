@@ -2,25 +2,31 @@ import React, { useState } from "react";
 import { dbService, storageService } from "firebaseConfig";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
+import { Link } from "react-router-dom";
 
 const Yweet = ({ yweetObj, isOwner }) => {
     const [editing, setEditing] = useState(false);
     const [newYweet, setNewYweet] = useState(yweetObj.text);
     const yweetTextRef = doc(dbService, "yweets", `${yweetObj.id}`);
     const yweetUrlRef = ref(storageService, yweetObj.attachmentUrl);
+    
     const onDeleteClick = async () => {
         const ok = window.confirm("Are you sure you want to delete this yweet?");
         if (ok) {
             await deleteDoc(yweetTextRef);
-            await deleteObject(yweetUrlRef);
+            if (yweetObj.attachmentUrl !== "") {
+                await deleteObject(yweetUrlRef);
+            }
         }
     };
     const toggleEditing = () => setEditing((prev) => !prev);
     const onSubmit = async (event) => {
         event.preventDefault();
         await updateDoc(yweetTextRef, {
-            text: newYweet
+            text: newYweet,
+            createdAt: Date.now()
         });
+        
         setEditing(false);
     };
     const onChange = (event) => {
@@ -42,6 +48,8 @@ const Yweet = ({ yweetObj, isOwner }) => {
                     </>
                  ) : (
                      <>
+                        <h3><Link to={`/profile/`+yweetObj.creatorId}>{yweetObj.creatorName}</Link></h3>
+                        <h5>{new Date(yweetObj.createdAt).toLocaleString()}</h5>
                         <h4>{yweetObj.text}</h4>
                         {yweetObj.attachmentUrl && <img src={yweetObj.attachmentUrl} width="50px" height="50px" />}
                         {isOwner && (
