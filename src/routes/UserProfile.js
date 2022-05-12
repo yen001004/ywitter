@@ -32,7 +32,7 @@ export default ({ userObj }) => {
     return (
         <div className="userMain">
         <h3>{userName}'s Home</h3>
-        <div>
+        <div className="cardgrid">
                 {userYweets.map((yweet) => (
                     <Yweet key={yweet.id} yweetObj={yweet} isOwner={yweet.creatorId === userObj.uid} />
                 ))}

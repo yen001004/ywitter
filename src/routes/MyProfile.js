@@ -67,7 +67,7 @@ export default ({ refreshUser, userObj }) => {
         </div>
             
             
-            <div>
+            <div className="cardgrid">
                 {myYweets.map((yweet) => (
                     <Yweet key={yweet.id} yweetObj={yweet} isOwner={yweet.creatorId === userObj.uid} />
                 ))}
