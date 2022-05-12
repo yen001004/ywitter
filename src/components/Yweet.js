@@ -40,7 +40,7 @@ const Yweet = ({ yweetObj, isOwner }) => {
     };
     return (
         <div className="yweets">
-            <Card>
+            <Card className="yweetCard">
             {
                 editing ? (
                     <>

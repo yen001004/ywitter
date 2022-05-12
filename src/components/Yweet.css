@@ -1,6 +1,11 @@
 .yweets {
+    
     padding: 1% 1%;
-    width: 500px;
+    width: auto;
+}
+
+.yweetCard {
+    width: auto;
 }
 
 .yweetTime {

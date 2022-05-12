@@ -22,7 +22,7 @@ const Home = ({ userObj }) => {
         <>
         <div className="homeMain">
             <YweetFactory userObj={userObj} />
-            <div>
+            <div className="cardgrid">
                 {yweets.map((yweet) => (
                     <Yweet userObj={userObj} key={yweet.id} yweetObj={yweet} isOwner={yweet.creatorId === userObj.uid} />
                 ))}
