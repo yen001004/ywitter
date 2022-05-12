@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import Yweet from "components/Yweet";
+import "routes/UserProfile.css"
 
 export default ({ userObj }) => {
     let params = useParams();
@@ -29,13 +30,13 @@ export default ({ userObj }) => {
 
 
     return (
-        <>
-        <h4>{userName}</h4>
+        <div className="userMain">
+        <h3>{userName}'s Home</h3>
         <div>
                 {userYweets.map((yweet) => (
                     <Yweet key={yweet.id} yweetObj={yweet} isOwner={yweet.creatorId === userObj.uid} />
                 ))}
             </div>
-        </>
+        </div>
     )
 };

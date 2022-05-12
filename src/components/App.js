@@ -32,7 +32,7 @@ function App() {
     const user = authService.currentUser;
     setUserObj({
       displayName: user.displayName,
-      uid: user.displayName,
+      uid: user.uid,
       updateProfile: (args) => updateProfile(user, { displayName: user.displayName }),
     });
   }

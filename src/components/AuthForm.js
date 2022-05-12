@@ -67,7 +67,7 @@ const AuthForm = () => {
                     </div>
                     <br />
                     <div>
-                    <Input size="large" prefix={<LockOutlined />} name="password" type="password" placeholder="Password" required value={password}onChange={onChange} className="input" />
+                    <Input size="large" prefix={<LockOutlined />} name="password" type="password" placeholder="Password" required value={password} onChange={onChange} className="input" />
                     </div>
                     <br />
                     <Button size="large" type="primary" block htmlType="submit" >{newAccount ? "Create Account" : "Log In"}</Button>

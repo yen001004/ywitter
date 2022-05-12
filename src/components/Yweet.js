@@ -4,7 +4,7 @@ import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { Link } from "react-router-dom";
 import "components/Yweet.css"
-import { Button, Card, Image } from "antd";
+import { Button, Card, Form, Image, Input } from "antd";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 
 const Yweet = ({ yweetObj, isOwner }) => {
@@ -45,10 +45,10 @@ const Yweet = ({ yweetObj, isOwner }) => {
                 editing ? (
                     <>
                         <form onSubmit={onSubmit}>
-                            <input type="text" placeholder="Edit your yweet" value={newYweet} required onChange={onChange}/>
-                            <input type="submit" value="Update Yweet" />
+                            <Input type="text" placeholder="Edit your yweet" value={newYweet} required onChange={onChange}/>
+                            <Input type="submit" value="Update Yweet" />
                         </form>
-                        <button onClick={toggleEditing}>Cancel</button>
+                        <Button onClick={toggleEditing}>Cancel</Button>
                     </>
                  ) : (
                      <>

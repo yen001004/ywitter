@@ -4,7 +4,7 @@ import { v4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import "components/YweetFactory.css"
-import { Image, Input } from "antd";
+import { Button, Image, Input } from "antd";
 import { CloudTwoTone } from "@ant-design/icons";
 
 const YweetFactory = ({ userObj }) => {
@@ -59,7 +59,7 @@ const YweetFactory = ({ userObj }) => {
                 {attachment && (
                     <div>
                         <Image src={attachment} width="150px" />
-                        <button onClick={onClearAttachment}>Clear</button>
+                        <Button onClick={onClearAttachment}>Clear</Button>
                     </div>
                 )}
             </form>

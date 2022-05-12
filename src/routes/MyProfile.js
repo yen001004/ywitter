@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import Yweet from "components/Yweet";
+import "routes/MyProfile.css"
+import { Button, Form, Input } from "antd";
 
 export default ({ refreshUser, userObj }) => {
     const navigate = useNavigate();
@@ -45,29 +47,31 @@ export default ({ refreshUser, userObj }) => {
         setNameUpdating(false);
     };
     return (
-        <>
+        <div className="myMain">
+            <h3>My Home</h3>
         <div>
             {
                 nameUpdating ? (
                     <>
                         <form onSubmit={onSubmit}>
-                            <input onChange={onChange} type="text" placeholder="Display name" value={newDisplayName} />
-                            <input type="submit" value="Update Profile" />
+                            <Input size="large" onChange={onChange} type="text" placeholder="Display name" value={newDisplayName} />
+                            <Input size="large" type="submit" value="Update Profile" />
                         </form>
-                        <button onClick={toggleNameUpdating}>Cancel</button>
+                        <Button onClick={toggleNameUpdating}>Cancel</Button>
                     </>
                 ) : (
-                    <button onClick={toggleNameUpdating}>Update Profile</button>
+                    <Button onClick={toggleNameUpdating}>Update Profile</Button>
                 )
             }
+            <Button onClick={onLogOutClick}>Log Out</Button>
         </div>
             
-            <button onClick={onLogOutClick}>Log Out</button>
+            
             <div>
                 {myYweets.map((yweet) => (
                     <Yweet key={yweet.id} yweetObj={yweet} isOwner={yweet.creatorId === userObj.uid} />
                 ))}
             </div>
-        </>
+        </div>
     )
 };
